@@ -150,6 +150,33 @@ t_state parse(std::string filename)
     u_short dim;
 
     if (parse_content(read(filename), dim, state) == -1)
+    {
         std::cout << "Invalid input file" << std::endl;
+        state.clear();
+    }
     return (state);
+}
+
+
+int usage()
+{
+    std::cout << "Usage:" << std::endl;
+    std::cout << "./npuzzle filename [heuristic]" << std::endl;
+    std::cout << "  filename:   Filename containing the dimension of the puzzle and the puzzle." << std::endl;
+    std::cout << "  heuristic:  Heuristic function to be used." << std::endl;
+    std::cout << "              manhattan is choosen by default." << std::endl;
+    std::cout << "              1. manhattan" << std::endl;
+    std::cout << "              2. euclidian" << std::endl;
+    std::cout << "              3. misplaced tiles" << std::endl;
+}
+
+
+int main(int argc, char **argv)
+{
+    if (argc == 1 || argc > 4)
+    {
+
+        return (-1);
+    }
+    return (0);
 }
