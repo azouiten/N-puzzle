@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 
-typedef std::vector<std::string >       t_content;
-typedef std::vector<std::vector<u_int> >  t_state;
+typedef std::vector<std::string >   t_content;
+typedef std::vector<uint>           t_state;
 
 
 std::string trim(std::string str)
@@ -27,31 +27,6 @@ bool is_number(std::string str)
     it = str.begin();
     while (it != str.end() && std::isdigit(*it)) ++it;
     return (!str.empty() && it == str.end());
-}
-
-
-std::vector<std::string> read(std::string filename)
-{
-    std::ifstream   ifs;
-    t_content       content;
-    std::string     line;
-    int pos;
-
-    ifs.open(filename, std::ios::in);
-    if (ifs.is_open())
-    {
-        while (getline(ifs, line))
-        {
-            line = trim(line);
-            if (line.size() && line[0] != '#')
-            {
-                if ((pos = line.find('#')) != std::string::npos)
-                    line = std::string(line, 0, pos);
-                content.push_back(line);
-            }
-        }
-    }
-    return (content);
 }
 
 
@@ -81,6 +56,31 @@ std::vector<std::string > split(std::string str, int del)
 }
 
 
+std::vector<std::string> read(std::string filename)
+{
+    std::ifstream   ifs;
+    t_content       content;
+    std::string     line;
+    int pos;
+
+    ifs.open(filename, std::ios::in);
+    if (ifs.is_open())
+    {
+        while (getline(ifs, line))
+        {
+            line = trim(line);
+            if (line.size() && line[0] != '#')
+            {
+                if ((pos = line.find('#')) != std::string::npos)
+                    line = std::string(line, 0, pos);
+                content.push_back(line);
+            }
+        }
+    }
+    return (content);
+}
+
+
 int parse_content(t_content content, u_short &dim, t_state &state)
 {
     t_content::iterator         it;
@@ -98,8 +98,7 @@ int parse_content(t_content content, u_short &dim, t_state &state)
         std::cout << *it << "|" << std::endl;
         if (!is_number(*it))
         {
-        std::cout << *it << std::endl;
-
+            std::cout << *it << std::endl;
             throw std::invalid_argument("retard");
         }
         dim = std::stoi(*it);
@@ -126,15 +125,16 @@ int parse_content(t_content content, u_short &dim, t_state &state)
                     return (-1);
                 total += std::stoi(tokens[i]);
                 dummy += count++;
-                row.push_back(std::stoi(tokens[i]));
+                state.push_back(std::stoi(tokens[i]));
+                // row.push_back(std::stoi(tokens[i]));
             }
             catch(const std::exception& e)
             {
                 return (-1);
             }
         }
-        state.push_back(row);
-        row.clear();
+        // state.push_back(row);
+        // row.clear();
         it++;
     }
     if (total != dummy)
@@ -177,9 +177,7 @@ int main(int argc, char **argv)
     st = parse(argv[1]);
     for (t_state::iterator it = st.begin(); it != st.end(); it++)
     {
-        for (std::vector<u_int>::iterator ot = (*it).begin(); ot != (*it).end(); ot++)
-            std::cout << *ot << " ";
-        std::cout << std::endl;
+        std::cout << *it << " ";
     }
     return (0);
 }
