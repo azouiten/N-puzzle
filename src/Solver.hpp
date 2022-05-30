@@ -8,40 +8,52 @@
 #include <cmath>
 #include <vector>
 #include "CompareNodes.hpp"
+#include "PriorityQueue.hpp"
+#include <iomanip>
+#include <cstdlib>
+#include <stdlib.h>
+#include <list>
+#include "pq.hpp"
+#include "types.hpp"
 
-typedef u_int64_t t_hash;
-typedef u_int32_t t_cost;
+#define MANHATTAN 0
+#define EUCLIDEAN 1
+#define HAMMING	2
 
-struct	t_node
-{
-	t_hash hash;
-	std::vector<std::vector<u_int> > state;
-	t_cost g;
-	t_cost h;
-	t_hash parent_hash;
-};
 
-typedef std::priority_queue<t_node *, std::vector<t_node *>, CompareNodes<t_node *> > t_priority_queue;
 
+// typedef PriorityQueue t_priority_queue;
+typedef PrioQueue<t_node *, std::vector<t_node *>, CompareNodes<t_node *> > t_priority_queue;
+// typedef std::list<t_node*> t_priority_queue;
+
+t_cost				manhattan(uint x1, uint y1, uint x2, uint y2);
+t_cost				euclidean(uint x1, uint y1, uint x2, uint y2);
+t_cost				hamming(uint x1, uint y1, uint x2, uint y2);
 class Solver
 {
 private:
 public:
-	t_node						goal_state;
-	std::map<t_hash, t_cost>	close_set;
-	std::map<t_hash, t_node>	pool;
-	t_priority_queue			open_set;
 	Solver(void);
+	t_node						goal_state;
+	t_node						init_state;
+	t_priority_queue			open_set;
+	std::map<t_hash, t_node&>	close_set;
+	std::map<t_hash, t_node>	pool;
+	int							heu_index;
+	// std::vector<std::function<t_cost(u_int,u_int,u_int,u_int)> > heu_tab;
+	// static t_cost (Solver::*tab_funcs[])(u_int x1, u_int x2, u_int y1, u_int y2);
+	Solver(t_node goal_state, t_node init_state, int mode);
 	~Solver(void);
 
 	// this should be removed after testing
-	t_priority_queue & getOpenSet(void);
-	t_hash	hashState(t_node & node);
-	t_cost	manhattan(u_int x1, u_int x2, u_int y1, u_int y2);
-	t_cost	euclidean(u_int x1, u_int x2, u_int y1, u_int y2);
-	t_cost	hamming(u_int x1, u_int x2, u_int y1, u_int y2);
-	t_cost	heuristic(t_node& node, t_node &goal, t_cost *heuristic_func(u_int x1, u_int x2, u_int y1, u_int y2));
-	
+	t_priority_queue &	getOpenSet(void);
+	t_hash				hashState(t_node & node);
+	t_cost				heuristic(t_node& node, t_node &goal);
+	t_node				&run(void);
+	void				print_path(t_hash);
+	std::vector<t_node>	expand(t_node & state);
+	void				create_node(std::vector<t_node>&, t_node&, int, int);
 };
+
 
 #endif
