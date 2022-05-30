@@ -30,7 +30,6 @@ bool is_number(std::string str)
 }
 
 
-
 std::vector<std::string> read(std::string filename)
 {
     std::ifstream   ifs;
@@ -158,7 +157,7 @@ t_state parse(std::string filename)
 }
 
 
-int usage()
+void usage()
 {
     std::cout << "Usage:" << std::endl;
     std::cout << "./npuzzle filename [heuristic]" << std::endl;
@@ -173,10 +172,14 @@ int usage()
 
 int main(int argc, char **argv)
 {
-    if (argc == 1 || argc > 4)
-    {
+    t_state st;
 
-        return (-1);
+    st = parse(argv[1]);
+    for (t_state::iterator it = st.begin(); it != st.end(); it++)
+    {
+        for (std::vector<u_int>::iterator ot = (*it).begin(); ot != (*it).end(); ot++)
+            std::cout << *ot << " ";
+        std::cout << std::endl;
     }
     return (0);
 }
