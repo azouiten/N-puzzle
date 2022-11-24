@@ -12,8 +12,6 @@ Parser::Parser(std::string fileName) : _fileName(fileName), _puzzleSize(0)
         throw InvalidFileException();
     this->loadData(puzzleFile);
     puzzleFile.close();
-    // print_vector(_array, "data\n");
-    // std::cout << "size : " << _puzzleSize << std::endl;
 }
 
 Parser::~Parser(void)
