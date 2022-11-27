@@ -29,6 +29,11 @@ const char * Parser::InvalidFileException::what() const throw()
     return ("Invalid File!");
 }
 
+size_t  Parser::getDim(void)
+{
+    return (_puzzleSize);
+}
+
 void    Parser::trimComment(std::string &line)
 {
     size_t index = 0, start = 0, end = 0;
@@ -111,16 +116,27 @@ void Parser::loadData(std::ifstream &puzzleFile)
         throw InvalidPuzzleException();
 }
 
-int main(int argc, char **argv)
+t_matrix    Parser::getMatrix(void)
 {
-    if (argc != 2)
-        return (1);
-    try
+    t_matrix    matrix;
+    t_array     row;
+    int index_i = 0, index_j = 0;
+    while (index_i < _puzzleSize)
     {
-        Parser parser(argv[1]);
+        index_j = 0;
+        row.clear();
+        while (index_j < _puzzleSize)
+        {
+            row.push_back(_array[index_i * _puzzleSize + index_j]);
+            index_j++;
+        }
+        matrix.push_back(row);
+        index_i++;
     }
-    catch (std::exception &e)
-    {
-        std::cout << "Error:" << e.what() << std::endl;
-    }
+    return (matrix);
+}
+
+t_array     &Parser::getArray(void)
+{
+    return _array;
 }

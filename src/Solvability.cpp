@@ -1,12 +1,8 @@
-#include <iostream>
-#include <algorithm>
-#include <iomanip>
-#include <vector>
-#include <string>
-#include <math.h>
 
 
-void print_puzzle(std::vector<std::vector<int>> &matrix, int dim)
+#include "parser.hpp"
+
+void print_puzzle(t_matrix &matrix, int dim)
 {
     int width = std::to_string(dim*dim).length() + 1;
 
@@ -20,7 +16,7 @@ void print_puzzle(std::vector<std::vector<int>> &matrix, int dim)
 }
 
 
-int fill_row(std::vector<std::vector<int>> &matrix, int r, int &n, int d, int dim)
+int fillRow(t_matrix &matrix, int r, int &n, int d, int dim)
 {
     int s, e, j;
 
@@ -42,7 +38,7 @@ int fill_row(std::vector<std::vector<int>> &matrix, int r, int &n, int d, int di
 }
 
 
-int fill_col(std::vector<std::vector<int>> &matrix, int c, int &n, int d, int dim)
+int fillCol(t_matrix &matrix, int c, int &n, int d, int dim)
 {
     int s, e, j;
 
@@ -64,10 +60,10 @@ int fill_col(std::vector<std::vector<int>> &matrix, int c, int &n, int d, int di
 }
 
 
-std::vector<std::vector<int>> make_goal(int dim)
+t_matrix makeGoal(int dim)
 {
-    std::vector<std::vector<int>> matrix;
-    int n, dir, last_c, last_r;
+    t_matrix matrix;
+    int n = 1, dir = 1, last_c = 0, last_r = 0;
 
     for (int i = 0; i < dim; i++)
     {
@@ -76,22 +72,24 @@ std::vector<std::vector<int>> make_goal(int dim)
             row.push_back(0);
         matrix.push_back(row);
     }
-    
-    n = 1;
-    dir = 1;
-    last_r = 0;
-    last_c = 0;
     while (n < dim * dim - 1)
     {
-        last_c = fill_row(matrix, last_r, n, dir, dim);
-        last_r = fill_col(matrix, last_c, n, dir, dim);
+        last_c = fillRow(matrix, last_r, n, dir, dim);
+        last_r = fillCol(matrix, last_c, n, dir, dim);
         dir *= -1;
     }
     return matrix;
 }
 
+// t_matrix makeGoalAsArray(int dim)
+// {
+//     t_array array;
+    
+//     return array;
+// }
 
-std::vector<int> flatten(std::vector<std::vector<int>> const &matrix)
+
+std::vector<int> flatten(t_matrix const &matrix)
 {
     std::vector<int> array;
 
@@ -125,7 +123,7 @@ int inversions(std::vector<int> &matrix, std::vector<int> &goal, int dim)
 }
 
 
-std::vector<int> find(std::vector<std::vector<int>> &matrix, int target, int dim)
+std::vector<int> find(t_matrix &matrix, int target, int dim)
 {
     std::vector<int> vec;
 
@@ -147,7 +145,7 @@ std::vector<int> find(std::vector<std::vector<int>> &matrix, int target, int dim
 }
 
 
-int manhattan(std::vector<std::vector<int>> &matrix, std::vector<std::vector<int>> &goal, int target, int dim)
+int manhattan(t_matrix &matrix, t_matrix &goal, int target, int dim)
 {
     std::vector<int> mv, gv;
 
@@ -157,7 +155,7 @@ int manhattan(std::vector<std::vector<int>> &matrix, std::vector<std::vector<int
 }
 
 
-int is_solvable(std::vector<std::vector<int>> &start, std::vector<std::vector<int>> &goal, int dim)
+int isSolvable(t_matrix &start, t_matrix &goal, int dim)
 {
     int inv, h;
     std::vector<int> flatten_s = flatten(start);
@@ -165,36 +163,35 @@ int is_solvable(std::vector<std::vector<int>> &start, std::vector<std::vector<in
 
     inv = inversions(flatten_s, flatten_e, dim);
     h = manhattan(start, goal, 0, dim);
-    std::cout << inv << " " << h << std::endl;
     if (inv % 2 == h % 2)
         return 1;
     return 0;
 }
 
 
-int main(int argc, char **argv)
-{
-    int dim = 4;
-    std::vector<std::vector<int>> goal = make_goal(dim);
-    std::vector<std::vector<int>> start = {
-        std::vector<int> {4, 7, 15, 1},
-        std::vector<int> {3, 13, 10, 11},
-        std::vector<int> {5, 12, 9, 14},
-        std::vector<int> {2, 6, 0, 8}
-    };
-    // std::vector<std::vector<int>> start = {
-    //     std::vector<int> {1, 4, 0},
-    //     std::vector<int> {5, 8, 6},
-    //     std::vector<int> {2, 7, 3}
-    // };
+// int main(int argc, char **argv)
+// {
+//     int dim = 4;
+//     t_matrix goal = make_goal(dim);
+//     t_matrix start = {
+//         std::vector<int> {4, 7, 15, 1},
+//         std::vector<int> {3, 13, 10, 11},
+//         std::vector<int> {5, 12, 9, 14},
+//         std::vector<int> {2, 6, 0, 8}
+//     };
+//     // t_matrix start = {
+//     //     std::vector<int> {1, 4, 0},
+//     //     std::vector<int> {5, 8, 6},
+//     //     std::vector<int> {2, 7, 3}
+//     // };
 
-    print_puzzle(start, dim);
-    print_puzzle(goal, dim);
+//     print_puzzle(start, dim);
+//     print_puzzle(goal, dim);
 
-    if (is_solvable(start, goal, dim))
-        std::cout << "Solvable" << std::endl;
-    else
-        std::cout << "Not solvable" << std::endl;
+//     if (is_solvable(start, goal, dim))
+//         std::cout << "Solvable" << std::endl;
+//     else
+//         std::cout << "Not solvable" << std::endl;
     
-    return (0);
-}
+//     return (0);
+// }
