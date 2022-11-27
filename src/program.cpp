@@ -40,10 +40,10 @@ int main(int argc, char **argv)
     e_heuristic heu = manhattan;
     bool        uniform = true;
     bool        greedy = true;
-    if (argc < 2)
-        throw InvalidArgException();
     try
     {
+        if (argc < 2)
+            throw InvalidArgException();
         if (argc > 2)
             grabArgs(argc, argv, &heu, &greedy, &uniform);
         Parser parser(argv[argc - 1]);
