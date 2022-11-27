@@ -215,7 +215,7 @@ void    Solver::run(t_heuristic heu, bool uniform, bool greedy)
             std::cout << "dimentions : " << _dim\
             << "\ntime : " \
             << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
-             << "\nspace : " << index << "\nsteps : " << current->g << std::endl;
+             << "\nspace : " << index << "\nsteps : " << current->g + 1 << std::endl;
             _printPath(current);
             std::cout << "#END\n";
             break;
