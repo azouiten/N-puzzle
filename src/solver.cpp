@@ -50,8 +50,6 @@ void    Solver::printQueue(void)
     {
         node = _openSet.top();
         std::cout << "g cost : " << node->g << '\n';
-        // std::cout << "calculated cost : " << node->g << '\n';
-        // printVector(node->state, std::string("all seeing\n"), _dim);
     }
     std::cout << '\n';
 }
@@ -224,7 +222,6 @@ void    Solver::run(t_heuristic heu, bool uniform, bool greedy)
         this->_grabChildren(current, uniform, greedy);
         index++;
     }
-    // std::cout << "#end" << index << std::endl;
 }
 
 std::vector<int> Solver::find(std::vector<int> &vec, int target, int dim)

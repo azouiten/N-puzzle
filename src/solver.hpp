@@ -32,9 +32,9 @@ typedef double t_cost;
 typedef struct  s_node
 {
     size_t  zero_ind;
-    size_t  estimatedCost;
-    size_t  h;
-    size_t  g;
+    t_cost  estimatedCost;
+    t_cost  h;
+    t_cost  g;
     t_hash    hash;
     std::vector<int> state;
     struct s_node *parent;
