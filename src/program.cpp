@@ -54,7 +54,10 @@ int main(int argc, char **argv)
         if (isSolvable(matrix, goal, dim))
             std::cout << "solvable\n";
         else
+        {
             std::cout << "unsolvable\n";
+            return (0);
+        }
         Solver s(dim, parser.getArray(),flatten(goal));
         s.run(heu, uniform, greedy);
     }
