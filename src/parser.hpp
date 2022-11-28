@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <string>
 #include <numeric>
+#include <set>
 
 
 typedef std::vector<std::vector<int> > t_matrix;

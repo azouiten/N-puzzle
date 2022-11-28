@@ -22,9 +22,17 @@ void    Parser::checkValues(void)
     int n = getDim();
     n = ((n * n) * ((n * n) - 1))/2;
     int val = std::accumulate(_array.begin(), _array.end(), 0);
-    std::cout << val << " " << n << " " << getDim() << " " << std::endl;
     if (n != val)
         throw InvalidPuzzleException();
+    n = _array.size();
+    int index = 0;
+    std::set<int> st;
+    while (index < n)
+    {
+        if (!st.insert(_array[index]).second)
+            throw InvalidFileException();
+        index++;
+    }
 }
 
 const char * Parser::InvalidPuzzleException::what() const throw()
