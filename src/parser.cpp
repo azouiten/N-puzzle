@@ -38,7 +38,7 @@ void    Parser::trimComment(std::string &line)
         line.clear();
     if (pos != std::string::npos)
         line = line.substr(0, pos);
-    // boost::trim(line);
+    boost::trim(line);
 }
 
 void    Parser::grabSize(std::string line)
