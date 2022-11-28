@@ -243,7 +243,7 @@ t_cost Solver::_manhattan(t_node &node, t_node &goal, int dim)
 
         for (int i = 0; i < dim * dim; i++)
         {
-                if (node.state[i] == goal.state[i])
+                if (node.state[i] == goal.state[i] || node.state[i] == 0)
                         continue;
                 p = find(goal.state, node.state[i], dim);
                 r = i / dim;
@@ -256,12 +256,12 @@ t_cost Solver::_manhattan(t_node &node, t_node &goal, int dim)
 t_cost Solver::_euclidian(t_node &node, t_node &goal, int dim)
 {
         t_cost score = 0.0;
-        int r, c;
+        double r, c;
         std::vector<int> p;
 
         for (int i = 0; i < dim * dim; i++)
         {
-                if (node.state[i] == goal.state[i])
+                if (node.state[i] == goal.state[i] || node.state[i] == 0)
                         continue;
                 p = find(goal.state, node.state[i], dim);
                 r = i / dim;
@@ -276,7 +276,7 @@ t_cost Solver::_misplacedTiles(t_node &node, t_node &goal, int dim)
         t_cost score = 0.0;
 
         for (int i = 0; i < dim * dim; i++)
-                score += node.state[i] == goal.state[i];
+                score += node.state[i] != goal.state[i] && node.state[i] != 0;
         return score;
 }
 
