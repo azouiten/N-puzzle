@@ -185,7 +185,7 @@ void    Solver::_printPath(t_node *node)
     if (node->parent)
         _printPath(node->parent);
     printVector(node->state, _dim);
-    std::cout << "g = " << node->g <<  " h = " << node->h <<
+    std::cout << std::setprecision(3) << "g = " << node->g <<  " h = " << node->h <<
     " f = " << node->estimatedCost << std::endl << std::endl;
 }
 

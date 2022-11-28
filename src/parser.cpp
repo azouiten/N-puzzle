@@ -3,9 +3,6 @@
 Parser::Parser(std::string fileName) : _fileName(fileName), _puzzleSize(0)
 {
     std::ifstream   puzzleFile;
-    size_t          index = 0;
-    char            *value_c, *line_c;
-    int             number;
 
     puzzleFile.open(_fileName, std::ios::in);
     if (!puzzleFile.good())
@@ -36,8 +33,6 @@ size_t  Parser::getDim(void)
 
 void    Parser::trimComment(std::string &line)
 {
-    size_t index = 0, start = 0, end = 0;
-    int found = 0;
     size_t pos = line.rfind('#');
     if (pos == 0)
         line.clear();
@@ -120,7 +115,7 @@ t_matrix    Parser::getMatrix(void)
 {
     t_matrix    matrix;
     t_array     row;
-    int index_i = 0, index_j = 0;
+    size_t index_i = 0, index_j = 0;
     while (index_i < _puzzleSize)
     {
         index_j = 0;

@@ -11,7 +11,7 @@ struct InvalidArgException : public std::exception {
 static void grabArgs(int lenght ,char **args, e_heuristic *heu,\
 bool *greedy, bool *uniform)
 {
-    size_t index = 1;
+    int index = 1;
     lenght--;
     while (index < lenght)
     {
