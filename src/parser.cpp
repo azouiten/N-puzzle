@@ -33,11 +33,12 @@ size_t  Parser::getDim(void)
 
 void    Parser::trimComment(std::string &line)
 {
-    size_t pos = line.rfind('#');
+    size_t pos = line.find('#');
     if (pos == 0)
         line.clear();
     if (pos != std::string::npos)
         line = line.substr(0, pos);
+    // boost::trim(line);
 }
 
 void    Parser::grabSize(std::string line)

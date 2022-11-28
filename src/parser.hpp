@@ -9,6 +9,7 @@
 #include <math.h>
 #include <algorithm>
 #include <string>
+#include <boost/algorithm/string.hpp>
 
 typedef std::vector<std::vector<int>> t_matrix;
 typedef std::vector<int> t_array;
