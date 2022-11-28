@@ -8,12 +8,23 @@ Parser::Parser(std::string fileName) : _fileName(fileName), _puzzleSize(0)
     if (!puzzleFile.good())
         throw InvalidFileException();
     this->loadData(puzzleFile);
+    this->checkValues();
     puzzleFile.close();
 }
 
 Parser::~Parser(void)
 {
 
+}
+
+void    Parser::checkValues(void)
+{
+    int n = getDim();
+    n = ((n * n) * ((n * n) - 1))/2;
+    int val = std::accumulate(_array.begin(), _array.end(), 0);
+    std::cout << val << " " << n << " " << getDim() << " " << std::endl;
+    if (n != val)
+        throw InvalidPuzzleException();
 }
 
 const char * Parser::InvalidPuzzleException::what() const throw()
@@ -38,7 +49,7 @@ void    Parser::trimComment(std::string &line)
         line.clear();
     if (pos != std::string::npos)
         line = line.substr(0, pos);
-    boost::trim(line);
+    line = trim(line);
 }
 
 void    Parser::grabSize(std::string line)
@@ -130,6 +141,21 @@ t_matrix    Parser::getMatrix(void)
         index_i++;
     }
     return (matrix);
+}
+
+std::string trim(std::string str)
+{
+    int index = 0;
+    int start = 0;
+    int end = 0;
+    while(str[index] == ' ')
+        index++;
+    start = index;
+    index = str.size() - 1;
+    while (str[index] == ' ' && index >= start)
+        index--;
+    end = index;
+    return str.substr(start, end - start + 1);
 }
 
 t_array     &Parser::getArray(void)

@@ -8,7 +8,7 @@ OBJ_PATH=./obj/
 SRCS=$(addprefix $(SRC_PATH), $(SRC))
 OBJS=$(addprefix $(OBJ_PATH), $(OBJ))
 CXX= clang++
-CXXFLAGS= -Wall -Werror -Wextra
+CXXFLAGS= -Wall -Werror -Wextra -Wc++11-extensions
 
 .phony: all clean fclean re
 

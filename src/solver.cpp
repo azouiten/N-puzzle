@@ -30,19 +30,6 @@ void    Solver::run(void)
     run(manhattan, false, false);
 }
 
-t_node  Solver::phonyNode(int number)
-{
-    t_node node;
-
-    node.estimatedCost = number;
-    node.h = 0;
-    node.g = 0;
-    node.parent = NULL;
-    node.zero_ind = 0;
-    return node;
-}
-
-
 void    Solver::printQueue(void)
 {
     t_node *node;
@@ -76,7 +63,7 @@ void    Solver::_grabChildUp(t_node *parent, bool uniform, bool greedy)
     else if (!inserted)
         return ;
     else
-        _pool.insert({node.hash, node});
+        _pool.insert(std::pair<t_hash, t_node>(node.hash, node));
     _openSet.push(&_pool[node.hash]);
 }
 
@@ -102,7 +89,7 @@ void    Solver::_grabChildDown(t_node *parent, bool uniform, bool greedy)
     else if (!inserted)
         return ;
     else
-        _pool.insert({node.hash, node});
+       _pool.insert(std::pair<t_hash, t_node>(node.hash, node));
     _openSet.push(&_pool[node.hash]);
 }
 
@@ -128,7 +115,7 @@ void    Solver::_grabChildRight(t_node *parent, bool uniform, bool greedy)
     else if (!inserted)
         return ;
     else
-        _pool.insert({node.hash, node});
+       _pool.insert(std::pair<t_hash, t_node>(node.hash, node));
     _openSet.push(&_pool[node.hash]);
 }
 
@@ -154,7 +141,7 @@ void    Solver::_grabChildLeft(t_node *parent, bool uniform, bool greedy)
     else if (!inserted)
         return ;
     else
-        _pool.insert({node.hash, node});
+        _pool.insert(std::pair<t_hash, t_node>(node.hash, node));
     _openSet.push(&_pool[node.hash]);
 }
 
@@ -199,7 +186,7 @@ void    Solver::run(t_heuristic heu, bool uniform, bool greedy)
     _initState.h = (this->*funcs[_heu])(_initState, _goalState, _dim);
     _initState.estimatedCost = _initState.h;
     _initState.zero_ind = this->_getZeroIndex(_initState);
-    _pool.insert({_initState.hash, _initState});
+    _pool.insert(std::pair<t_hash, t_node>(_initState.hash, _initState));
     _openSet.push(&_pool[_initState.hash]);
     _closeSet.insert(_initState.hash);
     int index = 0;
@@ -213,7 +200,7 @@ void    Solver::run(t_heuristic heu, bool uniform, bool greedy)
             std::cout << "dimentions : " << _dim\
             << "\ntime : " \
             << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
-             << "\nspace : " << index << "\nsteps : " << current->g + 1 << std::endl;
+             << " ms\nspace : " << _pool.size() << "\nsteps : " << current->g + 1 << std::endl;
             _printPath(current);
             std::cout << "#END\n";
             break;
@@ -283,9 +270,13 @@ t_cost Solver::_misplacedTiles(t_node &node, t_node &goal, int dim)
 t_hash Solver::_stateHash(const std::vector<int> &state)
 {
     t_hash _hash;
+    size_t i = 0;
 
-    for (const int &s: state)
-        _hash += std::to_string(s);
+    while (i < _dim * _dim)
+    {
+        _hash += std::to_string(state[i]);
+        i++;
+    }
     return _hash;
 }
 

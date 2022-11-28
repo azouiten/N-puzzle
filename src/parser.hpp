@@ -9,9 +9,10 @@
 #include <math.h>
 #include <algorithm>
 #include <string>
-#include <boost/algorithm/string.hpp>
+#include <numeric>
 
-typedef std::vector<std::vector<int>> t_matrix;
+
+typedef std::vector<std::vector<int> > t_matrix;
 typedef std::vector<int> t_array;
 
 
@@ -26,6 +27,8 @@ private:
     void    trimComment(std::string &line);
     void    grabSize(std::string line);
     void    grabPuzzle(std::string line);
+    void    checkValues(void);
+
 public:
     Parser(std::string fileName);
     ~Parser(void);
@@ -53,8 +56,8 @@ t_matrix makeGoal(int dim);
 void print_puzzle(t_matrix &matrix, int dim);
 t_matrix makeGoalAsArray(int dim);
 
-std::vector<int> flatten(t_matrix const &matrix);
-
+std::vector<int> flatten(t_matrix &matrix);
+std::string trim(std::string str);
 template <typename T>
 void print_vector(std::vector<T> V, std::string headline)
 {

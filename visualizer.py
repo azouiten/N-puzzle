@@ -30,10 +30,10 @@ def read_states():
     info = {
         'content': lines,
         'solv':    True if lines[0] == 'solvable' else False,
-        'dim':     int(lines[1].split(': ')[-1]),
-        'time':  float(lines[2].split(': ')[-1]),
-        'space':   int(lines[3].split(': ')[-1]),
-        'steps':   int(lines[4].split(': ')[-1]),
+        'dim':     int(lines[1].split(':')[-1]),
+        'time':    lines[2],
+        'space':   lines[3],
+        'steps':   int(lines[4].split(':')[-1]),
         'curr':    0,
     }
 

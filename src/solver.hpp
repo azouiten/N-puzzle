@@ -73,7 +73,6 @@ class Solver
         t_heuristic         _heu;
         // add the array for the heuristics functions
         t_node              arrayToNode(std::vector<int>);
-        t_node              phonyNode(int number);
         void                printQueue(void);
         std::vector<int>    find(std::vector<int> &vec, int target, int dim);
         t_hash              _stateHash(const std::vector<int> &state);
