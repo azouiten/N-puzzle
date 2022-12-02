@@ -156,7 +156,6 @@ int isSolvable(t_matrix &start, t_matrix &goal, int dim)
     std::vector<int> flatten_e = flatten(goal);
     inv = inversions(flatten_s, flatten_e, dim);
     h = manhattan(start, goal, 0, dim);
-    std::cout << "issolvable\n";
     if (inv % 2 == h % 2)
         return 1;
     return 0;
