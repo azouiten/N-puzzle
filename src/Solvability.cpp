@@ -60,7 +60,7 @@ int fillCol(t_matrix &matrix, int c, int &n, int d, int dim)
 }
 
 
-t_matrix makeGoal(int dim)
+t_matrix make_goal_spiral(int dim)
 {
     t_matrix matrix;
     int n = 1, dir = 1, last_c = 0, last_r = 0;
