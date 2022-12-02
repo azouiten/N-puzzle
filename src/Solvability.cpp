@@ -81,13 +81,35 @@ t_matrix make_goal_spiral(int dim)
     return matrix;
 }
 
-// t_matrix makeGoalAsArray(int dim)
-// {
-//     t_array array;
-    
-//     return array;
-// }
+t_matrix make_goal_horizontal(int dim)
+{
+    t_matrix matrix;
+    int n = 0;
 
+    for (int i = 0; i < dim; i++)
+    {
+        for (int j = 0; j < dim; j++)
+        {
+            matrix[i][j] = ++n;
+        }
+    }
+    matrix[dim-1][dim-1] = 0;
+}
+
+t_matrix make_goal_vertical(int dim)
+{
+    t_matrix matrix;
+    int n = 0;
+
+    for (int i = 0; i < dim; i++)
+    {
+        for (int j = 0; j < dim; j++)
+        {
+            matrix[j][i] = ++n;
+        }
+    }
+    matrix[dim-1][dim-1] = 0;
+}
 
 std::vector<int> flatten(t_matrix const &matrix)
 {
